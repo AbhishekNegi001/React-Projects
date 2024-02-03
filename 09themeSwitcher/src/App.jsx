@@ -8,7 +8,7 @@ function App() {
   const [themeMode, setThemeMode] = useState('light')
 
   //we can declare the properties of values directly here
-  const  lightTheme = ()=>{
+  const  lightTheme = ()=>{ //defining functionalities
     setThemeMode('light')
   }
   const darkTheme = ()=>{
