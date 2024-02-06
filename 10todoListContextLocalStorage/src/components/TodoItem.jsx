@@ -3,11 +3,11 @@ import {useTodoContext} from "../context/TodoContext";
 
 function TodoItem({ todo }) {
     const [isTodoEditable,setIsTodoEditable] = useState(false)
-    const [todoMsg,setTodoMsg] = useState(todo.todo)
+    const [todoMsg,setTodoMsg] = useState(todo.text)
     const {updateTodo, deleteTodo, toggleComplete} = useTodoContext()
 
     const editTodo = ()=>{
-        updateTodo(todo.id, {...todo, todo: todoMsg})
+        updateTodo(todo.id, {...todo, text: todoMsg})
         setIsTodoEditable(false)
     }
 
