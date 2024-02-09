@@ -11,7 +11,7 @@ export class Service{
         .setEndpoint(configVariables.appWriteUrl)
         .setProject(configVariables.appWriteProjectId);
 
-        this.databases = new Databases(client);
+        this.databases = new Databases(this.client);
         this.buckets = new Storage(this.client)
     }
 
@@ -27,13 +27,12 @@ export class Service{
                     content,
                     featuredImage,
                     status,
-                    userId
+                    userId,
                 }
             )
         }
         catch(error){
             console.log("Post Creation failed :", error)
-            throw error;
         }
     }
     async updatePost(slug, {title, content, featuredImage, status}){
@@ -46,13 +45,12 @@ export class Service{
                     title,
                     content,
                     featuredImage,
-                    status
+                    status,
                 }
             )
         }
         catch(error){
             console.log("Post Updation failed :", error)
-            throw error;
         }
     }
     async deletePost(slug){
@@ -66,7 +64,6 @@ export class Service{
         }
         catch(error){
             console.log("Post deletion failed :", error)
-            throw error;
             return false;
         }
     }
@@ -81,13 +78,13 @@ export class Service{
         }
         catch(error){
             console.log("Post Creation failed :", error)
-            throw error;
+            return false;
         }
     }
 
     async getPosts(queries = [Query.equal('status',"active")]){//for applying indexes we need to create indexes in our database
         try{
-            return await this.databases.getDocument(
+            return await this.databases.getDocument(// result of query gives a array of result
                 configVariables.appWriteDatabaseId,
                 configVariables.appWriteCollectionId,
                 queries,
@@ -95,7 +92,7 @@ export class Service{
         }
         catch(error){
             console.log("Post Creation failed :", error)
-            throw error;
+            return false;
         }
     }
 
@@ -109,14 +106,13 @@ export class Service{
         }
         catch(error){
             console.log("File uploadation failed :", error)
-            throw error;
             return false;
         }
     }
 
     async deleteFile(fileId){//for applying indexes we need to create indexes in our database
         try{
-            return await this.buckets.deleteFile(
+            await this.buckets.deleteFile(
                 configVariables.appWriteBucketId,
                 fileId
             )
@@ -124,20 +120,7 @@ export class Service{
         }
         catch(error){
             console.log("File deletion failed :", error)
-            throw error;
-        }
-    }
-
-    async uploadFile(file){//for applying indexes we need to create indexes in our database
-        try{
-            return await this.buckets.createFile(
-                configVariables.appWriteBucketId,
-                ID.unique(),
-            )
-        }
-        catch(error){
-            console.log("File uploadation failed :", error)
-            throw error;
+            return false;
         }
     }
 
@@ -150,11 +133,11 @@ export class Service{
         }
         catch(error){
             console.log("File Preview Error :",error)
-            throw error;
+            return false;
         }
     }
 }
 
-const service = new Service();
+const appwriteService = new Service();
 
-export default service;
+export default appwriteService;

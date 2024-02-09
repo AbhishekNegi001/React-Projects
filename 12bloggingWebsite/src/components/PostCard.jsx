@@ -1,4 +1,4 @@
-import appwriteService from "../appwrite/config"
+import appwriteService from "../appwriteService/config"
 import {Link} from 'react-router-dom'
 
 //id is return as $id as of appwrite syntax

@@ -44,7 +44,6 @@ export class AuthService {
         }
         catch(error){
             console.log('Error Occurred during logout :', error)
-            throw error;
         }
     }
 
@@ -54,7 +53,6 @@ export class AuthService {
         }
         catch(error){
             console.log('Current User not found :', error)
-            throw error;
         }
 
         return null;
